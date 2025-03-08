@@ -1,6 +1,6 @@
 pipeline {
     agent {
-            label 'docker-agent'
+        label 'docker-agent'
     }
    
     stages {
@@ -11,23 +11,30 @@ pipeline {
             }
         }
         
-        stage("Run Tests ") {
+        stage("Run Tests") {
             steps {
                 bat 'mvn clean test'
             }
         }
+
         stage('Stop Selenium Grid') {
             steps {
                 bat 'docker-compose down'
             }
         }
 
-        stage('Publish JUnit Report') {
+        stage('Publish Test Report') {
             steps {
-                junit 'target/surefire-reports/**/*.xml'
+                // Ajoutez ici les étapes pour publier le rapport (par exemple, Allure ou JUnit)
+                junit 'target/surefire-reports/**/*.xml' // Exemple pour JUnit
             }
-
-      
+        }
     }
 
+    post {
+        always {
+            // Ajoutez ici des actions post-build (par exemple, nettoyage, notifications)
+            echo 'Pipeline terminé.'
+        }
+    }
 }

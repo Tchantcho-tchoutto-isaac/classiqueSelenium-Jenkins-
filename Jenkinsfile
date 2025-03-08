@@ -22,7 +22,7 @@ pipeline {
 
         stage('Stop Selenium Grid') {
             steps {
-                sh 'docker-compose down'
+                sh 'sudo docker-compose down'
             }
         }
 

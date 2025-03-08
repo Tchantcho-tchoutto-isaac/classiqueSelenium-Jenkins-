@@ -1,8 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3.8.5-openjdk-11'// Image Maven avec JDK
-            args '--network=host'// Accéder au Selenium Grid
+            label 'docker-agent'
         }
     }
    
@@ -16,7 +15,12 @@ pipeline {
         
         stage("Run Tests ") {
             steps {
-                sh 'npm install'
+                sh 'mvn clean test'
+            }
+        }
+        stage('Stop Selenium Grid') {
+            steps {
+                sh 'docker-compose down'
             }
         }
 

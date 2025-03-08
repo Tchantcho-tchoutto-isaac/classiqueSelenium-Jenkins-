@@ -1,6 +1,9 @@
 pipeline {
     agent {
-        label 'docker-agent'
+        docker {
+            image 'docker:dind' // Utilise l'image Docker-in-Docker
+            args '-v /var/run/docker.sock:/var/run/docker.sock' // Monte le socket Docker
+        }
     }
    
     stages {

@@ -22,6 +22,11 @@ pipeline {
             }
         }
 
+        stage('Publish JUnit Report') {
+            steps {
+                junit 'target/surefire-reports/**/*.xml'
+            }
+
       
     }
 

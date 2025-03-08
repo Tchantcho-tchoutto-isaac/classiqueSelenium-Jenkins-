@@ -6,20 +6,20 @@ pipeline {
     stages {
         stage("Start Selenium Grid") {
             steps {
-                bat 'docker-compose up -d'
+                sh 'docker-compose up -d'
                 sleep 10 // Attendre que Selenium démarre
             }
         }
         
         stage("Run Tests") {
             steps {
-                bat 'mvn clean test'
+                sh 'mvn clean test'
             }
         }
 
         stage('Stop Selenium Grid') {
             steps {
-                bat 'docker-compose down'
+                sh'docker-compose down'
             }
         }
 

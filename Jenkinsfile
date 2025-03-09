@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'docker-agent' // Utilise l'agent avec l'étiquette "docker-agent"
+        label 'agent-selenium-local' // Utilise l'agent avec l'étiquette "agent-selenium-local"
     }
 
     stages {

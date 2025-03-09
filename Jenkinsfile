@@ -1,24 +1,33 @@
 pipeline {
-    agent any
-
+    agent {
+            label 'docker-agent'
+    }
+   
     stages {
-            stage('verify browsers are installed'){
-                steps{
-                    sh 'google-chrome --version'
-                    sh 'firefox --version'
-                }
-
+        stage("Start Selenium Grid") {
+            steps {
+                bat 'docker-compose up -d'
+                sleep 10 // Attendre que Selenium démarre
             }
-            stage ('lancement des test'){
-                steps {
-                    sh './mvnw clean test'
-                }
-            }
-    }
-
-    post {
-        always {
-            echo 'Pipeline terminé.'
         }
+        
+        stage("Run Tests ") {
+            steps {
+                bat 'mvn clean test'
+            }
+        }
+        stage('Stop Selenium Grid') {
+            steps {
+                bat 'docker-compose down'
+            }
+        }
+
+        stage('Publish JUnit Report') {
+            steps {
+                junit 'target/surefire-reports/**/*.xml'
+            }
+
+      
     }
+
 }

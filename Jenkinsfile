@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3.8.6-openjdk-17' // Utilise une image Maven avec Java
+            image 'maven:3.8.7-eclipse-temurin-17' // Version existante de Maven
             args '-v /var/run/docker.sock:/var/run/docker.sock' // Monte le socket Docker
         }
     }

@@ -15,6 +15,16 @@ services:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PORT=4442
       - SE_NODE_MAX_SESSIONS=5
+    shm_size: 2gb
+    command: >
+      bash -c "google-chrome --headless --disable-gpu --disable-dev-shm-usage --no-sandbox --remote-debugging-port=9222
+      --disable-software-rasterizer --disable-background-networking --disable-background-timer-throttling
+      --disable-backgrounding-occluded-windows --disable-breakpad --disable-client-side-phishing-detection
+      --disable-component-update --disable-default-apps --disable-domain-reliability --disable-extensions
+      --disable-features=AudioServiceOutOfProcess --disable-hang-monitor --disable-ipc-flooding-protection
+      --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-sync
+      --force-color-profile=srgb --metrics-recording-only --no-first-run --safebrowsing-disable-auto-update
+      --enable-automation --password-store=basic --use-mock-keychain --window-size=1920,1080"
 
   firefox:
     image: selenium/node-firefox:4.10.0
@@ -25,3 +35,13 @@ services:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PORT=4442
       - SE_NODE_MAX_SESSIONS=5
+    shm_size: 2gb
+    command: >
+      bash -c "firefox --headless --disable-gpu --no-sandbox --remote-debugging-port=9222
+      --disable-software-rasterizer --disable-background-networking --disable-background-timer-throttling
+      --disable-backgrounding-occluded-windows --disable-breakpad --disable-client-side-phishing-detection
+      --disable-component-update --disable-default-apps --disable-domain-reliability --disable-extensions
+      --disable-features=AudioServiceOutOfProcess --disable-hang-monitor --disable-ipc-flooding-protection
+      --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-sync
+      --force-color-profile=srgb --metrics-recording-only --no-first-run --safebrowsing-disable-auto-update
+      --enable-automation --password-store=basic --use-mock-keychain --window-size=1920,1080"

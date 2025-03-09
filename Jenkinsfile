@@ -7,6 +7,12 @@ pipeline {
     }
 
     stages {
+        stage('Check Docker Compose') {
+    steps {
+        sh 'docker-compose --version'
+    }
+}
+
         stage("Start Selenium Grid") {
             steps {
                 sh 'docker-compose up -d' // Démarre Selenium Grid

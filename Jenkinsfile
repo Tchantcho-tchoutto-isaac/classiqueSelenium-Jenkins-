@@ -1,37 +1,34 @@
 pipeline {
     agent {
-        label 'agent-selenium-local' // Utilise l'agent avec l'étiquette "agent-selenium-local"
+        docker {
+            image 'maven:3.8.6-openjdk-17' // Utilise une image Maven avec Java
+            args '-v /var/run/docker.sock:/var/run/docker.sock' // Monte le socket Docker
+        }
     }
 
     stages {
-        stage("Test Docker Access") {
-            steps {
-                bat 'docker ps' // Vérifie si Jenkins a bien accès à Docker
-            }
-        }
-
         stage("Start Selenium Grid") {
             steps {
-                bat 'docker-compose up -d'
+                sh 'docker-compose up -d' // Démarre Selenium Grid
                 sleep 10 // Attendre que Selenium démarre
             }
         }
 
         stage("Run Tests") {
             steps {
-                bat 'mvn clean test'
+                sh 'mvn clean test' // Exécute les tests
             }
         }
 
         stage('Stop Selenium Grid') {
             steps {
-                bat 'docker-compose down' // Suppression de "sudo"
+                sh 'docker-compose down' // Arrête Selenium Grid
             }
         }
 
         stage('Publish Test Report') {
             steps {
-                junit 'target/surefire-reports/**/*.xml' // Exemple pour JUnit
+                junit 'target/surefire-reports/**/*.xml' // Publie les rapports de test
             }
         }
     }
